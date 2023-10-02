@@ -1,36 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Exemplo de Requisição HTTP GET</title>
+  <title>Exemplo de Requisição AJAX</title>
 </head>
 <body>
 
 <div id="resultado"></div>
 
 <script>
-window.onload = fazerRequisicao;
-
 function fazerRequisicao() {
   // URL da solicitação HTTP GET
   const url = "https://gartic.com.br/info_sala.php?x=1655213163911&id_sala=33";
 
-  // Faz a solicitação HTTP GET usando a API Fetch
-  fetch(url)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Falha na solicitação HTTP GET');
-      }
-      return response.text();
-    })
-    .then(data => {
-      // Define o conteúdo da div "resultado" com o resultado da API
-      document.getElementById("resultado").textContent = `${data}`;
-    })
-    .catch(error => {
-      // Em caso de erro, exibe uma mensagem de erro na div "resultado"
-      document.getElementById("resultado").textContent = 'Erro ao fazer a requisição: ' + error.message;
-    });
+  // Faz a solicitação AJAX
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', url, true);
+
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      const data = JSON.parse(xhr.responseText);
+
+      // Exibe o resultado na div "resultado"
+      document.getElementById("resultado").textContent = `${JSON.stringify(data)}`;
+    } else if (xhr.readyState === 4) {
+      // Em caso de erro
+      document.getElementById("resultado").textContent = 'Erro ao fazer a requisição';
+    }
+  };
+
+  xhr.send();
 }
+
+// Chama a função assim que a página carregar
+window.onload = fazerRequisicao;
 </script>
 
 </body>
