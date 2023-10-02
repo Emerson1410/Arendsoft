@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exemplo de Requisição HTTP GET</title>
+</head>
+<body>
+
+<button onclick="fazerRequisicao()">Fazer Requisição</button>
+
+<script>
+function fazerRequisicao() {
+  // URL da solicitação HTTP GET
+  const url = "https://gartic.com.br/info_sala.php?x=1655213163911&id_sala=33";
+
+  // Faz a solicitação HTTP GET usando a API Fetch
+  fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Falha na solicitação HTTP GET');
+      }
+      return response.text();
+    })
+    .then(data => {
+      alert(`Resultado da Requisição: \n${data}`);
+    })
+    .catch(error => {
+      alert('Erro ao fazer a requisição: ' + error.message);
+    });
+}
+</script>
+
+</body>
+</html>
