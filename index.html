@@ -5,9 +5,11 @@
 </head>
 <body>
 
-<button onclick="fazerRequisicao()">Fazer Requisição</button>
+<div id="resultado"></div>
 
 <script>
+window.onload = fazerRequisicao;
+
 function fazerRequisicao() {
   // URL da solicitação HTTP GET
   const url = "https://gartic.com.br/info_sala.php?x=1655213163911&id_sala=33";
@@ -21,10 +23,12 @@ function fazerRequisicao() {
       return response.text();
     })
     .then(data => {
-      alert(`Resultado da Requisição: \n${data}`);
+      // Define o conteúdo da div "resultado" com o resultado da API
+      document.getElementById("resultado").textContent = `${data}`;
     })
     .catch(error => {
-      alert('Erro ao fazer a requisição: ' + error.message);
+      // Em caso de erro, exibe uma mensagem de erro na div "resultado"
+      document.getElementById("resultado").textContent = 'Erro ao fazer a requisição: ' + error.message;
     });
 }
 </script>
